@@ -6,8 +6,9 @@ Notes Taking Android Application implementing RecyclerView instead of old ListVi
 
 A basic note taking android application which uses RecyclerView to display data and RoomDB maps database object to Java object. Read/Write of datas in Room are done using DAO (Data Access Objects)
 
-[comment]: <> (Repository is alsp impleneted in app incase multiple sources of DB are used eg. Elastic Search, Firebase)
-
+<!---
+(Repository is alsp impleneted in app incase multiple sources of DB are used eg. Elastic Search, Firebase)
+-->
 
 ### Images
 
