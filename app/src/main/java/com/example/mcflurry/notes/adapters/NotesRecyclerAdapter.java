@@ -19,6 +19,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     private static final String TAG = "NotesRecyclerAdapter";
     private ArrayList<Note> mNotes = new ArrayList<>();
     private OnNoteListener mOnNoteListener;
+
     public NotesRecyclerAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener) {
         this.mNotes = notes;
         this.mOnNoteListener = onNoteListener;
@@ -33,19 +34,18 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        
-        try {
-            String month = mNotes.get(i).getTimeStamp().substring(0,2); // get first two number in MM-yyyy which is the month.
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+
+        try{
+            String month = mNotes.get(position).getTimestamp().substring(0, 2); // get first two number in MM-yyyy which is the month.
             month = Utility.getMonthFromNumber(month);
-            String year = mNotes.get(i).getTimeStamp().substring(3);
+            String year = mNotes.get(position).getTimestamp().substring(3);
             String timestamp = month + " " + year;
-
-            viewHolder.timestamp.setText(timestamp);
-            viewHolder.title.setText(mNotes.get(i).getTitle());
-
-        } catch (Exception e){
-            Log.e(TAG, "onBindViewHolder: NullPointerException: " + e.getMessage() );
+            holder.timestamp.setText(timestamp);
+            holder.title.setText(mNotes.get(position).getTitle());
+        }catch (NullPointerException e){
+            Log.e(TAG, "onBindViewHolder: Null Pointer: " + e.getMessage() );
         }
 
         
@@ -58,29 +58,54 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     }
 // ************************************************************
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView title, timestamp;
-        OnNoteListener onNoteListener;
+//    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+//        private TextView title, timestamp;
+//        OnNoteListener onNoteListener;
+//
+//        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+//            super(itemView);
+//
+//            title = itemView.findViewById(R.id.note_title);
+//            timestamp = itemView.findViewById(R.id.note_timestamp);
+//            this.onNoteListener = onNoteListener;
+//
+//            itemView.setOnClickListener(this);
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            onNoteListener.onNoteClick(getAdapterPosition());
+//        }
+//    }
+//
+//    public interface OnNoteListener{
+//        void onNoteClick(int position);
+//
+//    }
 
-        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView timestamp, title;
+        OnNoteListener mOnNoteListener;
+
+        public ViewHolder(View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-
-            title = itemView.findViewById(R.id.note_title);
             timestamp = itemView.findViewById(R.id.note_timestamp);
-            this.onNoteListener = onNoteListener;
+            title = itemView.findViewById(R.id.note_title);
+            mOnNoteListener = onNoteListener;
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onNoteListener.onNoteClick(getAdapterPosition());
+            Log.d(TAG, "onClick: " + getAdapterPosition());
+            mOnNoteListener.onNoteClick(getAdapterPosition());
         }
     }
 
     public interface OnNoteListener{
         void onNoteClick(int position);
-
     }
 
 

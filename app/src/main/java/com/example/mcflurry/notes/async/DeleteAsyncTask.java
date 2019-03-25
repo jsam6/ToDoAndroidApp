@@ -13,18 +13,17 @@ public class DeleteAsyncTask extends AsyncTask<Note, Void, Void> {
     private static final String TAG = "InsertAsyncTask";
     private NoteDao mNoteDao;
 
-    public DeleteAsyncTask(NoteDao dao){
+    public DeleteAsyncTask(NoteDao dao) {
         mNoteDao = dao;
     }
 
-
     @Override
     protected Void doInBackground(Note... notes) {
+
         Log.d(TAG, "doInBackground: thread: " + Thread.currentThread().getName()); //Activity will Run on MAIN thread where as Async will run on BG (different) thread.
         mNoteDao.delete(notes);
         return null;
     }
-
 
 
 }

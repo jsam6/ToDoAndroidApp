@@ -11,12 +11,12 @@ public class InsertAsyncTask extends AsyncTask<Note, Void, Void> {
     // Whatever u specified in the AsyncTask<THINGS> will be passed into doInBackGround(THINGS) method.
 
     private static final String TAG = "InsertAsyncTask";
+
     private NoteDao mNoteDao;
 
-    public InsertAsyncTask(NoteDao dao){
+    public InsertAsyncTask(NoteDao dao) {
         mNoteDao = dao;
     }
-
 
     @Override
     protected Void doInBackground(Note... notes) {

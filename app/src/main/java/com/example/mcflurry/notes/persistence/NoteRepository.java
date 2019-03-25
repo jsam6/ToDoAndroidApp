@@ -25,16 +25,15 @@ public class NoteRepository {
         // eg. execute(NOTE) -> doInBackground(NOTE)
     }
 
-    public void updateNote(Note note){
+    public void updateNoteTask(Note note){
         new UpdateAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
     }
 
     public LiveData<List<Note>> retrieveNotesTask() {
-
         return mNoteDatabase.getNoteDao().getNotes();
     }
 
-    public void deleteNote(Note note){
+    public void deleteNoteTask(Note note){
         new DeleteAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
     }
 

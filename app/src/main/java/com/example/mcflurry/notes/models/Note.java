@@ -7,23 +7,20 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-@Entity(tableName = "notes") //Declaring the class as an Entity for Room.
+@Entity(tableName = "notes")
 public class Note implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
-    @ColumnInfo(name="title")
-    public String title;
+    @ColumnInfo(name = "title")
+    private String title;
 
     @ColumnInfo(name = "content")
-    public String content;
+    private String content;
 
-    // @NonNull if u don't want the field to be Null.
     @ColumnInfo(name = "timestamp")
-    public String timestamp;
-
-
+    private String timestamp;
 
     public Note(String title, String content, String timestamp) {
         this.title = title;
@@ -31,8 +28,9 @@ public class Note implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    @Ignore //Ignore empty constructor. bcs its only used on selected situation
+    @Ignore
     public Note() {
+
     }
 
 
@@ -79,26 +77,24 @@ public class Note implements Parcelable {
         this.content = content;
     }
 
-    public String getTimeStamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimeStamp(String timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-
 
     @Override
     public String toString() {
         return "Note{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 '}';
     }
 
-    //************************ PARCELABLE ********************************//
+
     @Override
     public int describeContents() {
         return 0;
@@ -111,38 +107,4 @@ public class Note implements Parcelable {
         parcel.writeString(content);
         parcel.writeString(timestamp);
     }
-    //************************ PARCELABLE ********************************//
-
 }
-
-//************************ PARCELABLE ********************************//
-//    protected Note(Parcel in) {
-//        title = in.readString();
-//        content = in.readString();
-//        timestamp = in.readString();
-//    }
-//
-//    public static final Creator<Note> CREATOR = new Creator<Note>() {
-//        @Override
-//        public Note createFromParcel(Parcel in) {
-//            return new Note(in);
-//        }
-//
-//        @Override
-//        public Note[] newArray(int size) {
-//            return new Note[size];
-//        }
-//    };
-
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-
-//    @Override
-//    public void writeToParcel(Parcel parcel, int i) {
-//        parcel.writeString(title);
-//        parcel.writeString(content);
-//        parcel.writeString(timestamp);
-//    }
-//************************ PARCELABLE ********************************//

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class NotesListActivity extends AppCompatActivity implements
         NotesRecyclerAdapter.OnNoteListener,
-        View.OnClickListener
+        FloatingActionButton.OnClickListener
 
 {
     private static final String TAG = "NotesListActivity";
@@ -45,9 +46,10 @@ public class NotesListActivity extends AppCompatActivity implements
 
         findViewById(R.id.fab).setOnClickListener(this); //FloatingActionButton
 
-        mNoteRepository = new NoteRepository(this);
+
 
         initRecyclerView();
+        mNoteRepository = new NoteRepository(this);
         retrieveNotes(); // insertFakeNotes();
 
 //        Note note = new Note("Title", "Content","timestamp")
@@ -64,15 +66,12 @@ public class NotesListActivity extends AppCompatActivity implements
         // in this method, using a method to observe if data is change LIVE
         //Anytime there is a change to the LiveData object, this method will be triggered.
         mNoteRepository.retrieveNotesTask().observe(this, new Observer<List<Note>>() {
-            // Everytime there is change to the SB, the observe() will call onChange()
-            // Any Databaase call using LIveData are by default asynchronous. Meaning they operate on Background thread.
             @Override
             public void onChanged(@Nullable List<Note> notes) {
-                if (mNotes.size() > 0){
-                    //Clear if there is existing notes.
+                if(mNotes.size() > 0){
                     mNotes.clear();
                 }
-                if (notes != null){
+                if(notes != null){
                     mNotes.addAll(notes);
                 }
                 mNoteRecyclerAdapter.notifyDataSetChanged();
@@ -83,9 +82,9 @@ public class NotesListActivity extends AppCompatActivity implements
     private void insertFakeNotes(){
         for (int i=0; i<100; i++){
             Note note = new Note();
-            note.setTitle("Title: "+ i);
-            note.setContent("Content: "+ i);
-            note.setTimeStamp("Feb 2019");
+            note.setTitle("title #" + i);
+            note.setContent("content #: " + i);
+            note.setTimestamp("Jan 2019");
             mNotes.add(note);
         }
         mNoteRecyclerAdapter.notifyDataSetChanged(); //update list
@@ -123,7 +122,7 @@ public class NotesListActivity extends AppCompatActivity implements
         mNotes.remove(note);
         mNoteRecyclerAdapter.notifyDataSetChanged();
 
-        mNoteRepository.deleteNote(note);
+        mNoteRepository.deleteNoteTask(note);
     }
 
     private ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -131,16 +130,15 @@ public class NotesListActivity extends AppCompatActivity implements
         // '0' for onMove because we are not Moving. // if you want to swipe both RIGHT & LEFT then you can ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT
         //SimpleCallback is a simple method instead of Callback. The Callback has more method associated with it.
         @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             // Moving items in notes
             return false;
         }
 
         @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             // Swiping function in notes
             deleteNote(mNotes.get(viewHolder.getAdapterPosition()));
-
         }
     };
 }

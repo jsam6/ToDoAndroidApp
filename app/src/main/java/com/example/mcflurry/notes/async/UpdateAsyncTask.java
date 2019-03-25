@@ -13,15 +13,16 @@ public class UpdateAsyncTask extends AsyncTask<Note, Void, Void> {
     private static final String TAG = "InsertAsyncTask";
     private NoteDao mNoteDao;
 
-    public UpdateAsyncTask(NoteDao dao){
+    public UpdateAsyncTask(NoteDao dao) {
         mNoteDao = dao;
     }
+
 
 
     @Override
     protected Void doInBackground(Note... notes) {
         Log.d(TAG, "doInBackground: thread: " + Thread.currentThread().getName()); //Activity will Run on MAIN thread where as Async will run on BG (different) thread.
-        mNoteDao.update(notes);
+        mNoteDao.updateNotes(notes);
         return null;
     }
 

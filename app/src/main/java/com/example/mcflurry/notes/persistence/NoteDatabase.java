@@ -14,12 +14,10 @@ public abstract class NoteDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "notes_db";
 
     private static NoteDatabase instance;
-
-
     // Singleton pattern.
     // Singleton pattern refers to an instance of an object.
     static NoteDatabase getInstance(final Context context){
-        if (instance == null){
+        if(instance == null){
             instance = Room.databaseBuilder(
                     context.getApplicationContext(),
                     NoteDatabase.class,
@@ -30,4 +28,5 @@ public abstract class NoteDatabase extends RoomDatabase {
     }
 
     public abstract NoteDao getNoteDao();
+
 }

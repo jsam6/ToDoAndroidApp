@@ -34,5 +34,5 @@ public interface NoteDao {
     int delete(Note... notes);
 
     @Update
-    int update(Note... notes);
+    int updateNotes(Note... notes);
 }
