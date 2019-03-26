@@ -12,6 +12,10 @@ A basic note taking android application which uses RecyclerView to display data 
 
 ### Images
 
+### Screenshot
+![alt text](https://raw.githubusercontent.com/jsam6/ToDoAndroidApp/master/notes-img/screenshot-1.PNG "Screenshot 1")
+
+
 #### Tap on Floating Action button(bottom right) to add notes
 
 ![alt text](https://raw.githubusercontent.com/jsam6/ToDoAndroidApp/master/notes-img/add.gif "Adding Note")
